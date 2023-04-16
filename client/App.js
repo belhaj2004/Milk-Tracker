@@ -11,7 +11,16 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{
+          title: 'MilkTracker',
+          headerStyle: {
+            backgroundColor: '#038E48',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}/>
         <Stack.Screen name="Milk" component={MilkScreen} />
       </Stack.Navigator>
     </NavigationContainer>

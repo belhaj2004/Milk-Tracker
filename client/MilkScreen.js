@@ -22,28 +22,6 @@ const MilkScreen = ({ route }) => {
   const [selectedMonth, setSelectedMonth] = useState(selectedDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
 
-  /*const handleSave = () => {
-    const newData = {
-      //labels: [...data.labels, `${selectedDay}/${selectedMonth + 1}/${selectedYear}`],
-      labels: [
-        ...data.labels,
-        `${selectedMonth + 1}/${selectedDay}/${selectedYear}`,
-      ],
-      
-      datasets: [
-        {
-          data: [...data.datasets[0].data, Number(milkAmount)],
-          color: (opacity = 1) => `rgba(0, 102, 204, ${opacity})`,
-          strokeWidth: 2,
-        },
-      ],
-    };
-
-    setData(newData);
-    setMilkAmount('');
-  };*/
-
-  //////////////
   const handleSave = () => {
     const newDate = new Date(selectedYear, selectedMonth, selectedDay);
     const options = { month: 'long' };
@@ -63,7 +41,7 @@ const MilkScreen = ({ route }) => {
     setData(newData);
     setMilkAmount('');
   };
-  ///////////
+
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -84,8 +62,7 @@ const MilkScreen = ({ route }) => {
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
-          <Text style={styles.title}>Milk Screen</Text>
-          <Text style={styles.greeting}>Hi {username}!</Text>
+          <Text style={styles.title}>Welcome Back, {username}</Text>
           <View style={styles.dateContainer}>
   <Picker
     selectedValue={selectedDay}
@@ -130,7 +107,7 @@ const MilkScreen = ({ route }) => {
       <TextInput
         style={styles.input}
         keyboardType="numeric"
-        placeholder="Enter Milk Amount"
+        placeholder="Enter Amount in mL"
         value={milkAmount}
         onChangeText={(text) => setMilkAmount(text)}
       />
