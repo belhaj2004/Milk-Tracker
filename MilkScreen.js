@@ -22,9 +22,14 @@ const MilkScreen = ({ route }) => {
   const [selectedMonth, setSelectedMonth] = useState(selectedDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
 
-  const handleSave = () => {
+  /*const handleSave = () => {
     const newData = {
-      labels: [...data.labels, `${selectedDay}/${selectedMonth + 1}/${selectedYear}`],
+      //labels: [...data.labels, `${selectedDay}/${selectedMonth + 1}/${selectedYear}`],
+      labels: [
+        ...data.labels,
+        `${selectedMonth + 1}/${selectedDay}/${selectedYear}`,
+      ],
+      
       datasets: [
         {
           data: [...data.datasets[0].data, Number(milkAmount)],
@@ -36,7 +41,29 @@ const MilkScreen = ({ route }) => {
 
     setData(newData);
     setMilkAmount('');
+  };*/
+
+  //////////////
+  const handleSave = () => {
+    const newDate = new Date(selectedYear, selectedMonth, selectedDay);
+    const options = { month: 'long' };
+    const formattedMonth = newDate.toLocaleString('en-US', options);
+  
+    const newData = {
+      labels: [...data.labels, `${formattedMonth} ${selectedDay}, ${selectedYear}`],
+      datasets: [
+        {
+          data: [...data.datasets[0].data, Number(milkAmount)],
+          color: (opacity = 1) => `rgba(0, 102, 204, ${opacity})`,
+          strokeWidth: 2,
+        },
+      ],
+    };
+  
+    setData(newData);
+    setMilkAmount('');
   };
+  ///////////
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -60,31 +87,35 @@ const MilkScreen = ({ route }) => {
           <Text style={styles.title}>Milk Screen</Text>
           <Text style={styles.greeting}>Hi {username}!</Text>
           <View style={styles.dateContainer}>
-            <Picker
-              selectedValue={selectedDay}
-              onValueChange={(itemValue, itemIndex) => setSelectedDay(itemValue)}
-            >
-              {[...Array(31)].map((_, i) => (
-                <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
-              ))}
-            </Picker>
-            <Picker
-              selectedValue={selectedMonth}
-              onValueChange={(itemValue, itemIndex) => setSelectedMonth(itemValue)}
-            >
-              {[                'January',                'February',                'March',                'April',                'May',                'June',                'July',                'August',                'September',                'October',                'November',                'December',              ].map((month, i) => (
-                <Picker.Item key={i} label={month} value={i} />
-              ))}
-            </Picker>
-            <Picker
-              selectedValue={selectedYear}
-              onValueChange={(itemValue, itemIndex) => setSelectedYear(itemValue)}
-            >
- {[...Array(20)].map((_, i) => (
-  <Picker.Item key={i} label={`${selectedDate.getFullYear() - i}`} value={selectedDate.getFullYear() - i} />
-))}
-        </Picker>
-      </View>
+  <Picker
+    selectedValue={selectedDay}
+    onValueChange={(itemValue, itemIndex) => setSelectedDay(itemValue)}
+  >
+    {[...Array(31)].map((_, i) => (
+      <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
+    ))}
+  </Picker>
+  <Picker
+    selectedValue={selectedMonth}
+    onValueChange={(itemValue, itemIndex) => {
+      setSelectedMonth(itemValue);
+      setSelectedDay(1);
+    }}
+  >
+    {[      'January',      'February',      'March',      'April',      'May',      'June',      'July',      'August',      'September',      'October',      'November',      'December',    ].map((month, i) => (
+      <Picker.Item key={i} label={month} value={i} />
+    ))}
+  </Picker>
+  <Picker
+    selectedValue={selectedYear}
+    onValueChange={(itemValue, itemIndex) => setSelectedYear(itemValue)}
+  >
+    {[...Array(20)].map((_, i) => (
+      <Picker.Item key={i} label={`${selectedDate.getFullYear() - i}`} value={selectedDate.getFullYear() - i} />
+    ))}
+  </Picker>
+</View>
+
       <TouchableOpacity style={styles.datePickerButton} onPress={showDatepicker}>
         <Text style={styles.datePickerButtonText}>Select Date</Text>
       </TouchableOpacity>
